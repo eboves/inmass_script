@@ -46,9 +46,10 @@ def calculate_SF_cone(part):
 
 def calculate_SF_tube(part):
 
-    part_lenth = part.GetParameter('L').Value
-    print("part_lenth: ", part_lenth)
-
+    # part_lenth = part.GetParameter('L').Value/25.4  # Convert mm to inches
+    # print("part_lenth: ", part_lenth)
+    part_conf = part.CreatedBy().Value
+    print("part_conf: ", part_conf)
 
 # TODO: Print assy and subassy.
 # Function to get the current assembly
@@ -57,12 +58,11 @@ def list_components(assembly, indent=0):
     # Print parts in this assembly
     for part in assembly.Parts:
         print("{}- {} (Part)".format(space, part.Name))
-        if 'cone' in part.Name.lower():
-            calculate_SF_cone(part) # Calculate square feet for cone parts
-        elif 'tube' in part.Name.lower():
+        if 'tube' in part.Name.lower() and "lag stop" not in part.Name.lower():
             calculate_SF_tube(part) # Calculate square feet for tube parts
-
-    # Print subassemblies and go deeper recursively
+        elif 'cone' in part.Name.lower():
+            calculate_SF_cone(part) # Calculate square feet for cone parts
+           
     for sub in assembly.SubAssemblies:
         print("{}- {} (Assembly)".format(space, sub.Name))
         list_components(sub, indent + 1)
