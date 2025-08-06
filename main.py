@@ -7,6 +7,19 @@ this script will calculate also the insulation materials for each project.
 # Import necessary modules
 import math
 
+class RawPart:
+    def __init__ (self, name, pn, length, thickness, qty, description, big_dia, small_dia, height, angle):
+        self.name = name
+        self.pn = pn
+        self.length = length
+        self.thickness = thickness
+        self.qty = qty
+        self.description = description
+        self.big_dia = big_dia
+        self.small_dia = small_dia
+        self.height = height
+        self.angle = angle
+
 
 # TODO: function to calculate cones
 # function to calculate square feet for a cone part
@@ -46,10 +59,8 @@ def calculate_SF_cone(part):
 
 def calculate_SF_tube(part):
 
-    # part_lenth = part.GetParameter('L').Value/25.4  # Convert mm to inches
-    # print("part_lenth: ", part_lenth)
-    part_conf = part.CreatedBy().Value
-    print("part_conf: ", part_conf)
+    part_lenth = part.GetParameter('L').Value/25.4  # Convert mm to inches
+    print("part_lenth: ", part_lenth)
 
 # TODO: Print assy and subassy.
 # Function to get the current assembly
