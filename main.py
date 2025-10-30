@@ -96,14 +96,14 @@ with open(BOM_URL, 'r') as f:
                             length_in = float(input("Enter length in inches for part {}: ".format(part_no)))
                             tube_od = float(input("Enter outer diameter in inches for part {}: ".format(part_no)))
                             if length_in <= 0 or tube_od <= 0:
-                                print("⚠️ Length and outer diameter must be positive numbers. Please try again.\n")
+                                print("Length and outer diameter must be positive numbers. Please try again.\n")
                                 continue
                             # tube_sf = calculations.sheet_metal_tube_sf(tube_od, length_in)
                             tube_sf = calc_func.sheet_metal_tube_sf(tube_od, length_in)
                             multiplier = tube_sf
                             break  # valid input
                         except ValueError:
-                            print("❌ Invalid input. Please enter a numeric value only.\n")
+                            print("Invalid input. Please enter a numeric value only.\n")
                 if length_in:
                     multiplier = length_in / 12.0  # inches → feet
                 else:
@@ -125,10 +125,10 @@ with open(BOM_URL, 'r') as f:
 
                         # Validate that dimensions make sense (e.g., positive and od1 > od2)
                         if od1 <= 0 or od2 <= 0 or hgt <= 0:
-                            print("⚠️ All values must be positive numbers. Please try again.\n")
+                            print("All values must be positive numbers. Please try again.\n")
                             continue
                         if od1 <= od2:
-                            print("⚠️ Big diameter must be larger than small diameter. Please try again.\n")
+                            print("Big diameter must be larger than small diameter. Please try again.\n")
                             continue
 
                         # Valid input → compute multiplier
@@ -136,7 +136,7 @@ with open(BOM_URL, 'r') as f:
                         break  # exit input loop
 
                     except ValueError:
-                        print("❌ Invalid input. Please enter numeric values only.\n")
+                        print("Invalid input. Please enter numeric values only.\n")
             else:
                 # Extracted automatically from text
                 big_dia = cone_dims["D10"]
@@ -154,11 +154,11 @@ with open(BOM_URL, 'r') as f:
                     try:
                         flange_od = float(input("Enter flange OD for flange part {}: ".format(part_no)))
                         if flange_od <= 0:
-                            print("⚠️ Flange OD must be a positive number. Please try again.\n")
+                            print("Flange OD must be a positive number. Please try again.\n")
                             continue
                         break  # valid input
                     except ValueError:
-                        print("❌ Invalid input. Please enter a numeric value only.\n")
+                        print("Invalid input. Please enter a numeric value only.\n")
             
             matl = material
             thk = THK_LIST.get(thickness, None)  
@@ -184,6 +184,20 @@ with open(BOM_URL, 'r') as f:
             else:
                 multiplier = 0
 
+
+# Determine regular miter set
+
+        elif "MITER" in desc or "MITTER" in desc or "MITERS" in desc or "MITTERS" in desc:
+            print("Please enter the information bellow to calculate miter SF.")
+            
+            diameter = float(input(f"Enter diameter for miter calculation (must be positive and greater than 0){part_no}:"))
+            radious = float(input(f"Enter the radious for miter calculation (must be positive and greater than 0) {part_no}: "))
+            angle = float(input(f"Enter elbow miter angle (must be positive) {part_no}: "))
+            no_miter = float(input(f"Enter the number of miter sections  {part_no}: "))
+                        
+            multiplier = calc_func.regular_miter(diameter, radious, angle, no_miter)
+                  
+              
 
 
 

@@ -45,8 +45,42 @@ def sheet_metal_tube_sf(od, length):
     square_feet = (area * 1.05) / 144  # Convert square inches to square feet
     return square_feet
 
+# Function calculates the SF of REGULAR MITER SET (NO TRANSITIONING MITER)
+#@param diameter is the outer diameter of the miters example: 10
+#@param radious is the radious of the entire miter set example: 9
+#@param angle is the complete angle of the elbow miter example: 110
+#@param no_miter is how many sections are making that elbow miter example: 5
 def regular_miter(diameter, radious, angle, no_miter):
-    ro = radious + (diameter/2)
-    ri = radious - (diameter/2)
-    theta = angle/no_miter
-    # Chord = 
+    """Calculate the Square feet for regular miter set. """
+    try:
+
+        if any(x is None for x in [diameter, radious, angle, no_miter]):
+            raise ValueError("All inputs must have a value")
+        if no_miter == 0:
+            raise ZeroDivisionError("Number of miter can NOT be ZERO.")
+        if radious <= 0 or diameter <= 0 or angle <= 0:
+            raise ValueError("Diameter, Radious, and Angle must be positive")
+
+
+
+        ro = radious + (diameter/2)
+        ri = radious - (diameter/2)
+        if ri <= 0:
+            raise ValueError("Inner radious became negative. Check your inputs.")
+        theta = angle/no_miter
+        chord_big = 2*(ro*(math.sin(((theta*math.pi)/180)/2)))
+        chord = 2*(ri*(math.sin(((theta*math.pi)/180)/2)))
+        apothem_big = ro*(math.cos((theta*math.pi)/360))
+        apothem = ri*(math.cos((theta*math.pi)/360))
+        dc = apothem_big - apothem
+        perimeter = math.pi * dc
+        area = round(((perimeter * chord_big * no_miter * 1.05)/144), 2)
+
+        if not math.isfinite(area) or area <= 0:
+            raise ValueError("Calculated area is not a valid real number.")
+
+        return area
+
+    except Exception as e:
+        print(f"Error calculating regular miter area: {e}")
+        return None
