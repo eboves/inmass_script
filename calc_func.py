@@ -53,7 +53,7 @@ def sheet_metal_tube_sf(od, length):
 def regular_miter(diameter, radious, angle, no_miter):
     """Calculate the Square feet for regular miter set. """
     try:
-
+        # Make sure all input values are positive and greater than 0
         if any(x is None for x in [diameter, radious, angle, no_miter]):
             raise ValueError("All inputs must have a value")
         if no_miter == 0:
@@ -67,6 +67,7 @@ def regular_miter(diameter, radious, angle, no_miter):
         ri = radious - (diameter/2)
         if ri <= 0:
             raise ValueError("Inner radious became negative. Check your inputs.")
+
         theta = angle/no_miter
         chord_big = 2*(ro*(math.sin(((theta*math.pi)/180)/2)))
         chord = 2*(ri*(math.sin(((theta*math.pi)/180)/2)))

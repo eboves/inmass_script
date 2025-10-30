@@ -177,10 +177,10 @@ with open(BOM_URL, 'r') as f:
 # Determine Diffuser
         elif "DIFFUSER" in desc:
             diffuser_od = extract_diffuser_info(part_confi_section)
-            print('DIFFUSER OD',diffuser_od)
+            # print('DIFFUSER OD',diffuser_od)
             if diffuser_od:
                 multiplier = calc_func.calc_flange_sf(diffuser_od)
-                print('SF of Diffuser', multiplier)
+                # print('SF of Diffuser', multiplier)
             else:
                 multiplier = 0
 
