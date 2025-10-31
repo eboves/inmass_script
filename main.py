@@ -31,7 +31,7 @@ from part_lookup import *
 INVENTORY_URL = r"C:\Users\EBOVES\Desktop\Scripts_Automation ELVIS Copy\EB_SCRIPTS\DME\inmass_script\INVENTORY LIST.csv"
                   
 
-BOM_URL = r"C:\Users\EBOVES\Desktop\Scripts_Automation ELVIS Copy\EB_SCRIPTS\DME\inmass_script\B25-10073.csv"
+BOM_URL = r"C:\Users\EBOVES\Desktop\Scripts_Automation ELVIS Copy\EB_SCRIPTS\DME\inmass_script\B25-10078.csv"
             
 
 parts_list = []  # list to store part objects
@@ -162,8 +162,10 @@ with open(BOM_URL, 'r') as f:
             
             matl = material
             thk = THK_LIST.get(thickness, None)  
+            print("THICKNESS", thk)
             flange_sf = calc_func.calc_flange_sf(flange_od)
             part_no = get_plate_part_no(material=matl, thickness=thk)
+            print("PART NUMBER", part_no)
             multiplier = flange_sf
 
 # Determine FLEX sections
